@@ -2,7 +2,7 @@
    Makes Nova Calendar work offline once it's been opened: the app is kept in a cache and refreshed
    in the background (updates arrive on the next visit), and fonts are kept once fetched. Your notes
    and day cards live in localStorage, not here. Bump VERSION when the list of app files changes. */
-const VERSION = 'nova-calendar-v2';
+const VERSION = 'nova-calendar-v3';
 const APP = [
   './', './manifest.webmanifest', './css/nova.css',
   './js/themes.js', './js/presets.js', './js/sky.js', './js/cosmos.js', './js/store.js', './js/backdrop.js', './js/app.js',

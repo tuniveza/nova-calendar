@@ -73,9 +73,11 @@
       <div class="themes" id="themes" role="radiogroup" aria-label="Colour theme"></div>
       <!-- Every Nova suite address, live and testing (behind the admin password) -->
       <a class="btn ghost sm" href="https://novacane-worker.novacane-studio.workers.dev/admin/links" target="_blank" rel="noopener" title="Every Nova suite address, live and testing (password protected)">🔒 Links</a>
+      <!-- Sound effects on or off (the shared Nova suite sounds, js/sfx.js); it plays its own chime when switched -->
+      <button type="button" class="btn ghost sm sound-btn" id="sound" aria-pressed="true" data-sfx="none" title="Sound effects">Sound</button>
       <button type="button" class="btn ghost sm" id="install" hidden title="Install Nova Calendar as an app on this device">Install</button>
-      <button type="button" class="btn primary" id="new-note"></button>
-      <button type="button" class="btn ghost" id="new-day"></button>
+      <button type="button" class="btn primary" id="new-note" data-sfx="open"></button>
+      <button type="button" class="btn ghost" id="new-day" data-sfx="open"></button>
     </div>
   </header>
 
@@ -139,10 +141,10 @@
       </div>
     </div>
     <footer class="dlg-foot">
-      <button type="button" class="btn ghost danger" id="note-delete">Delete</button>
+      <button type="button" class="btn ghost danger" id="note-delete" data-sfx="tap">Delete</button>
       <span class="spacer"></span>
       <button type="button" class="btn ghost" data-close>Cancel</button>
-      <button type="submit" class="btn primary">Save note card</button>
+      <button type="submit" class="btn primary" data-sfx="send">Save note card</button>
     </footer>
   </form>
 </dialog>
@@ -176,11 +178,11 @@
       <p class="form-error" id="day-error" role="alert"></p>
     </div>
     <footer class="dlg-foot">
-      <button type="button" class="btn ghost danger" id="day-delete">Delete</button>
+      <button type="button" class="btn ghost danger" id="day-delete" data-sfx="tap">Delete</button>
       <span class="spacer"></span>
       <button type="button" class="btn ghost" data-close>Cancel</button>
-      <button type="submit" class="btn ghost" value="note">Save &amp; add note</button>
-      <button type="submit" class="btn primary" value="save">Save day card</button>
+      <button type="submit" class="btn ghost" value="note" data-sfx="send">Save &amp; add note</button>
+      <button type="submit" class="btn primary" value="save" data-sfx="send">Save day card</button>
     </footer>
   </form>
 </dialog>
@@ -195,13 +197,14 @@
     <footer class="dlg-foot">
       <span class="spacer"></span>
       <button value="cancel" class="btn ghost">Keep it</button>
-      <button value="ok" class="btn danger solid">Delete</button>
+      <button value="ok" class="btn danger solid" data-sfx="remove">Delete</button>
     </footer>
   </form>
 </dialog>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<script src="js/sfx.js"></script>
 <script src="js/themes.js"></script>
 <script src="js/presets.js"></script>
 <script src="js/sky.js"></script>

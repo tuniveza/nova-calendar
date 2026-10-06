@@ -28,6 +28,9 @@
     clover: '<circle cx="12" cy="7.5" r="3.3"/><circle cx="7.6" cy="13" r="3.3"/><circle cx="16.4" cy="13" r="3.3"/><path d="M12 13.5c0 3 1 5.5 3 8"/>',
     pancake: '<ellipse cx="12" cy="16" rx="9" ry="3.2"/><path d="M3 16v-2.4c0-1.8 4-3.2 9-3.2s9 1.4 9 3.2V16M12 10.4V7c1.8 0 3 .8 3 2"/>',
     star: '<path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6l-5.4 2.9 1.2-6-4.5-4.2 6.1-.7z"/>',
+    // A speaker with sound coming out, and the same speaker switched off (the sound effects button)
+    sound: '<path d="M11 5 6.5 9H3.5v6h3l4.5 4z"/><path d="M15.5 9a4.5 4.5 0 0 1 0 6M18.3 6.2a8.5 8.5 0 0 1 0 11.6"/>',
+    muted: '<path d="M11 5 6.5 9H3.5v6h3l4.5 4z"/><path d="m16 9.5 5 5M21 9.5l-5 5"/>',
     plus: '<path d="M12 5v14M5 12h14"/>',
     left: '<path d="M15 5l-7 7 7 7"/>',
     right: '<path d="M9 5l7 7-7 7"/>',

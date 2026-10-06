@@ -159,6 +159,9 @@ button { font: inherit; }
 .btn.danger.solid { background: #C2363B; color: #fff; border-color: transparent; }
 .btn.sm { --pad: 6px 12px; font-size: 11px; letter-spacing: .1em; }
 .btn.sm .ico { width: 14px; height: 14px; }
+/* the sound effects switch: lit while sounds are on, dimmed while they're off */
+.sound-btn[aria-pressed="true"] .ico { color: var(--hi); }
+.sound-btn[aria-pressed="false"] { color: var(--muted); }
 
 .chip {
   display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; max-width: 100%;

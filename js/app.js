@@ -528,6 +528,25 @@
     reader.readAsText(file);
   }
 
+  // ---------- SOUND ----------
+  // The soft Nova suite sounds on every press come from js/sfx.js (shared by every Nova app).
+  // This is just their on/off button in the top bar; the choice is remembered on this device.
+  const sfx = () => window.NovaSfx;
+  function renderSound() {
+    const b = $('#sound');
+    const on = Boolean(sfx() && sfx().enabled());
+    b.hidden = !sfx();
+    b.setAttribute('aria-pressed', String(on));
+    b.title = on ? 'Sound effects are on (click to switch them off)' : 'Sound effects are off (click to switch them on)';
+    b.innerHTML = `${icon(on ? 'sound' : 'muted')}Sound`;
+  }
+  function toggleSound() {
+    if (!sfx()) return;
+    // A soft "off" chime while sounds are still on, so switching off is heard too (switching on plays its own)
+    if (sfx().enabled()) sfx().play('off');
+    sfx().toggle();
+  }
+
   // ---------- WIRING ----------
   function bind() {
     $('#prev').innerHTML = icon('left');
@@ -549,6 +568,9 @@
     $('#import').addEventListener('click', () => $('#import-file').click());
     $('#import-file').addEventListener('change', (e) => { if (e.target.files[0]) importData(e.target.files[0]); e.target.value = ''; });
     $('#themes').addEventListener('click', (e) => { const b = e.target.closest('[data-theme]'); if (b) setAppTheme(b.dataset.theme); });
+    renderSound();
+    $('#sound').addEventListener('click', toggleSound);
+    window.addEventListener('novasfxchange', renderSound);
 
     $('#grid').addEventListener('click', (e) => { const c = e.target.closest('[data-date]'); if (c) select(c.dataset.date); });
     $('#month-strip').addEventListener('click', (e) => { const c = e.target.closest('[data-date]'); if (c) select(c.dataset.date); });

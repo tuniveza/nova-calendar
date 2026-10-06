@@ -1,4 +1,4 @@
-/* Nova Task — app.js
+/* Nova Calendar — app.js
    The calendar, the selected-day panel and the two editors (note card, day card).
    Everything renders from the store; after any change we save and re-render. */
 (function () {
@@ -342,7 +342,7 @@
       const f = noteForm.elements;
       const theme = f.start.value ? noteTheme(f.start.value.slice(0, 10)) : appTheme();
       e.currentTarget.href = COS.render({ seed, subject: $('#note-subject').value, theme, w: 1920, h: 1080, type: 'image/png' });
-      const slug = (f.title.value || 'nova-task-note').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'nova-task-note';
+      const slug = (f.title.value || 'nova-calendar-note').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'nova-calendar-note';
       e.currentTarget.download = `${slug}.png`;
     });
 
@@ -506,7 +506,7 @@
     const blob = new Blob([JSON.stringify(S.snapshot(), null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = `nova-task-backup-${todayKey()}.json`;
+    a.download = `nova-calendar-backup-${todayKey()}.json`;
     document.body.appendChild(a);
     a.click();
     a.remove();
@@ -595,7 +595,43 @@
     setInterval(() => { if (todayKey() !== lastToday) { lastToday = todayKey(); renderGrid(); } }, 60000);
   }
 
+  // ---------- AS AN APP ----------
+  // Installable from the browser, works offline once opened (sw.js), and the launcher icon's
+  // shortcuts open straight into a new note card (./?new=note) or day card (./?new=day).
+  let installPrompt = null;
+  const standalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    installPrompt = e;
+    $('#install').hidden = false;
+  });
+  window.addEventListener('appinstalled', () => {
+    installPrompt = null;
+    $('#install').hidden = true;
+    toast('Nova Calendar is installed ✦ Open it from your apps');
+  });
+  $('#install').addEventListener('click', async () => {
+    if (standalone() || !installPrompt) return;
+    installPrompt.prompt();
+    await installPrompt.userChoice;
+    installPrompt = null;
+    $('#install').hidden = true;
+  });
+  function handleLaunch() {
+    const q = new URLSearchParams(location.search);
+    const what = q.get('new');
+    if (what === 'note') openNote(null, view.sel);
+    else if (what === 'day') openDay({ date: view.sel });
+    if (location.search) history.replaceState(null, '', location.pathname);
+  }
+  function registerOffline() {
+    if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+      navigator.serviceWorker.register('sw.js').catch((err) => console.warn('[Nova Calendar] offline mode unavailable', err));
+    }
+  }
+
   // ---------- START ----------
+  const scriptStart = performance.now();
   T.apply(document.documentElement, appTheme());
   $('meta[name="theme-color"]').setAttribute('content', T.get(appTheme()).void);
   NT.backdrop.init(appTheme());
@@ -604,4 +640,15 @@
   initDayEditor();
   bind();
   renderAll();
+  handleLaunch();
+  registerOffline();
+  // The launch screen holds for a moment so the moon and the name are seen, then fades away
+  {
+    const splash = document.getElementById('splash');
+    const hold = matchMedia('(prefers-reduced-motion: reduce)').matches ? 100 : Math.max(0, 900 - (performance.now() - scriptStart));
+    setTimeout(() => {
+      splash.classList.add('gone');
+      setTimeout(() => splash.remove(), 700);
+    }, hold);
+  }
 })();

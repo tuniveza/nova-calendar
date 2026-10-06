@@ -1,4 +1,4 @@
-/* Nova Task — nova.css
+/* Nova Calendar — nova.css
    Novacane cosmic styling. Colours come in as custom properties from js/themes.js; the values in
    :root below are the Novacane theme, so the page looks right before the script runs.
    Type: Archivo (wide, 900) for display, Saira for reading, Source Code Pro for labels and buttons. */
@@ -76,7 +76,30 @@ button { font: inherit; }
   backdrop-filter: blur(14px) saturate(1.15); -webkit-backdrop-filter: blur(14px) saturate(1.15);
 }
 .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; margin-right: auto; }
-.sigil { width: 46px; height: 46px; color: var(--soft); filter: drop-shadow(0 0 8px color-mix(in srgb, var(--hi) 60%, transparent)); }
+/* The Nova Calendar mark: a crescent-moon C, in the theme's colours */
+.app-mark {
+  width: 46px; height: 46px; flex: none; border-radius: 13px; overflow: hidden;
+  box-shadow: 0 0 0 1px color-mix(in srgb, #fff 14%, transparent), 0 10px 26px -10px var(--hi), 0 0 22px -8px var(--hi);
+  transition: transform .3s cubic-bezier(.2, .8, .2, 1), box-shadow .3s;
+}
+.brand:hover .app-mark { transform: rotate(-8deg) scale(1.06); }
+
+/* Launch screen: the moon rises, the name appears, then it fades into the calendar */
+.splash {
+  position: fixed; inset: 0; z-index: 100; display: grid; place-content: center; justify-items: center; gap: 14px;
+  background: radial-gradient(55% 45% at 50% 46%, color-mix(in srgb, var(--accent-3) 85%, var(--void)), var(--void) 72%) var(--void);
+  transition: opacity .6s ease, visibility .6s;
+}
+.splash.gone { opacity: 0; visibility: hidden; pointer-events: none; }
+.splash-mark { width: 116px; height: 116px; border-radius: 32px; overflow: hidden; box-shadow: 0 0 0 1px rgba(255, 255, 255, .14), 0 0 60px -10px var(--hi); animation: splash-rise .55s cubic-bezier(.2, .8, .2, 1) both; }
+.splash-name {
+  font-family: var(--f-display); font-stretch: 125%; font-weight: 900; text-transform: uppercase; font-size: 30px; letter-spacing: .04em;
+  background: var(--title-grad); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: splash-fade .5s ease .12s both, shimmer 6s linear infinite;
+}
+.splash-kicker { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .32em; text-transform: uppercase; color: var(--muted); animation: splash-fade .5s ease .25s both; }
+@keyframes splash-rise { from { opacity: 0; transform: translateY(18px) scale(.86) rotate(-12deg); filter: blur(6px); } }
+@keyframes splash-fade { from { opacity: 0; transform: translateY(6px); } }
 .brand-kicker { display: block; font-family: var(--f-mono); font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: var(--muted); }
 .wordmark, .shimmer {
   display: block; font-family: var(--f-display); font-stretch: 125%; font-weight: 900; text-transform: uppercase;

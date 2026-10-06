@@ -1,8 +1,10 @@
 <div align="center">
 
-<img src="docs/media/day-card.jpg" alt="Nova Task: an October month view with Nova's Birthday day card and a note card with its own generated moon picture" width="820">
+<img src="assets/icon.svg" width="96" alt="The Nova Calendar icon: a glowing crescent-moon C with three stars">
 
-# Nova Task
+<img src="docs/media/day-card.jpg" alt="Nova Calendar: an October month view with Nova's Birthday day card and a note card with its own generated moon picture" width="820">
+
+# Nova Calendar
 
 **A cosmic calendar of note cards and day cards, under a sky that follows the real moon.**
 
@@ -12,14 +14,31 @@
 [![Offline](https://img.shields.io/badge/works-offline-6E40C9)](#data)
 [![Nova suite](https://img.shields.io/badge/part%20of-nova--suite-B026FF)](https://github.com/tuniveza/nova-suite)
 
+### ✦ [Open Nova Calendar](https://nova-calendar.novacane-studio.workers.dev) ✦
+
+<sub>Works in any modern browser · install it as an app · works offline</sub>
+
 </div>
 
 ---
 
-Nova Task is a calendar from the Nova suite, built in Novacane Studios' style. You plan days
+Nova Calendar is a calendar from the Nova suite, built in Novacane Studios' style. You plan days
 with **note cards** and **day cards**: every note paints its own small piece of the cosmos,
 and every day sits under the real moon. It's a single folder of HTML, CSS and JavaScript with
 no build step, no server and no install.
+
+> **Formerly Nova Task.** Renamed to Nova Calendar in October 2026. Anything saved by the old
+> version in the same browser is picked up automatically.
+
+## Use it as an app
+
+Open **https://nova-calendar.novacane-studio.workers.dev** and install it from the **Install**
+button, the browser's address bar or menu (on iPhone/iPad: **Share → Add to Home Screen**).
+Installed, it gets its own window and launcher icon, works offline, and its icon's shortcut
+menu (long-press or right-click) opens straight into a **new note card** or **new day card**.
+
+To host your own copy on Cloudflare: `npx wrangler deploy` (see `wrangler.jsonc`; `_headers` sets
+the security headers and `.assetsignore` keeps the README and media off the site).
 
 ## What it does
 
@@ -104,10 +123,10 @@ python3 -m http.server 4600   # then open http://localhost:4600
 
 ## Data
 
-Everything is saved in this browser's `localStorage` under the key `nova-task/v1`; nothing is
+Everything is saved in this browser's `localStorage` under the key `nova-calendar/v1` (anything saved before the rename, under `nova-task/v1`, is picked up automatically); nothing is
 sent anywhere. Use **Export** to download a JSON backup and **Import** to merge one back in.
 Items with the same id are replaced by the imported copy. Exported backups
-(`nova-task-backup-*.json`) are ignored by git, so your own notes don't end up in the repo.
+(`nova-calendar-backup-*.json`) are ignored by git, so your own notes don't end up in the repo.
 
 ## Configuration
 
@@ -148,7 +167,7 @@ published almanac.
 | [nova-bot](https://github.com/tuniveza/nova-bot) | The website chat assistant, booking card and Nova Hub |
 | [nova-agent](https://github.com/tuniveza/nova-agent) | Browser helper that does jobs in Acuity's admin pages |
 | [nova-club](https://github.com/tuniveza/nova-club) | Members' Android app that shows the studio's busy times |
-| **[nova-task](https://github.com/tuniveza/nova-task)** | This repo: a cosmic calendar of note cards and day cards |
+| **[nova-calendar](https://github.com/tuniveza/nova-calendar)** | This repo: a cosmic calendar of note cards and day cards |
 | [nova-notes](https://github.com/tuniveza/nova-notes) | Nova Notes (in progress) |
 | [nova-observatory](https://github.com/tuniveza/nova-observatory) | A dashboard of every project, with screenshots and video |
 

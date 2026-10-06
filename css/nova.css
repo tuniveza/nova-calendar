@@ -480,3 +480,31 @@ select option { background: var(--deep); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* ---------- FIT TO THE WINDOW (inside Nova Agent; see js/embed.js) ----------
+   The whole calendar fits the space it's given: a slim header, a month grid
+   whose rows share the height, and the selected day beside or below it with
+   its own scroll. The legend and backup buttons stay in the full app. */
+html.embed, html.embed body { height: 100%; min-height: 0; overflow: hidden; }
+html.embed .app { height: 100%; display: flex; flex-direction: column; padding: 10px 12px; }
+html.embed .topbar { flex: none; padding: 8px 12px; gap: 10px; flex-wrap: nowrap; }
+html.embed .topbar .app-mark { width: 30px; height: 30px; }
+html.embed .topbar .kicker, html.embed .themes, html.embed #sound, html.embed .top-actions a[href*="admin/links"], html.embed #install { display: none !important; }
+html.embed .topbar .wordmark { font-size: 15px; }
+html.embed .month-label { font-size: 16px; }
+html.embed .top-actions .btn { padding: 6px 10px; font-size: 10.5px; }
+html.embed .layout { flex: 1; min-height: 0; margin-top: 10px; gap: 10px; grid-template-rows: minmax(0, 1fr); align-items: stretch; }
+html.embed .calendar { display: flex; flex-direction: column; min-height: 0; padding: 10px; }
+html.embed .weekdays { flex: none; }
+html.embed .wd { padding-bottom: 6px; }
+html.embed .grid { flex: 1; min-height: 0; grid-auto-rows: minmax(0, 1fr); }
+html.embed .cell { min-height: 0; overflow: hidden; padding: 6px; gap: 2px; }
+html.embed .month-strip, html.embed .cal-foot { display: none; }
+html.embed .panel { position: static; max-height: none; min-height: 0; overflow-y: auto; }
+/* Wide: the day beside the month. Narrow: the day under it, sharing the height */
+@media (min-width: 760px) { html.embed .layout { grid-template-columns: minmax(0, 1fr) minmax(260px, 340px); } }
+@media (max-width: 759px) {
+  html.embed .layout { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1.4fr) minmax(0, 1fr); }
+  html.embed .topbar { flex-wrap: wrap; }
+}
+html.embed .app > .foot { display: none; }
